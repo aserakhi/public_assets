@@ -37,8 +37,8 @@ pipeline {
         stage('Upload assets') {
               steps {
                   dir("${WORKSPACE}/${params.GIT_PROJECT}") {
+                      sh "sudo az storage azcopy blob delete -c ${params.APP_CONTAINER} --account-name ${params.APP_STORAGEACCOUNT} --recursive"
                       sh "sudo az storage azcopy blob upload -c ${params.APP_CONTAINER} --account-name ${params.APP_STORAGEACCOUNT} -s \"tyk_assets/*\" --recursive"
-
                   }
               }
         }
