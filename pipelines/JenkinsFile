@@ -4,8 +4,8 @@ pipeline {
       string(name: 'GIT_URL'              , defaultValue: 'https://github.com/aserakhi/public_assets.git', description: ' adresse Depot GIT')
       string(name: 'GIT_CREDS_ID'         , defaultValue: 'foxlab_https'                                 , description: 'Declarer les Credentials')
       string(name: 'GIT_PROJECT'          , defaultValue: 'tyk_public_assets'                            , description: 'Nom du Projet')
-      string(name: 'APP_CONTAINER'        , defaultValue: 'ppdtykassets'                                    , description: 'Contenaire du blob storage de l\'application')
-      string(name: 'APP_STORAGEACCOUNT'   , defaultValue: 'ppd-vcsi'                                       , description: 'Compte de stockage de l\'application')
+      string(name: 'APP_CONTAINER'        , defaultValue: 'ppdtykassets'                                 , description: 'Contenaire du blob storage de l\'application')
+      string(name: 'APP_STORAGEACCOUNT'   , defaultValue: 'ppdvcsi'                                      , description: 'Compte de stockage de l\'application')
   }
 
   options {
