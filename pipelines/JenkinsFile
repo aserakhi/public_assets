@@ -1,0 +1,48 @@
+pipeline {
+  parameters {
+      string(name: 'GIT_BRANCH'  , defaultValue: 'main'                                         , description: 'Branche à compiler/livrer')
+      string(name: 'GIT_URL'     , defaultValue: 'https://github.com/aserakhi/public_assets.git', description: ' adresse Depot GIT')
+      string(name: 'GIT_CREDS_ID', defaultValue: 'foxlab_https'                                 , description: 'Declarer les Credentials')
+      string(name: 'GIT_PROJECT' , defaultValue: 'tyk_public_assets'                            , description: 'Nom du Projet')
+
+      string(name: 'APP_CONTAINER'        , description: 'Contenaire du blob storage de l\'application')
+      string(name: 'APP_STORAGEACCOUNT'   , description: 'Compte de stockage de l\'application')
+  }
+
+  
+  options {
+      ansiColor('xterm')
+      disableConcurrentBuilds()
+      buildDiscarder(logRotator(numToKeepStr: '5'))
+  }
+  agent any
+    stages {
+        stage('build') {
+            steps {
+                deleteDir()
+                checkout changelog: false, poll: false,
+                scm: [
+                $class: 'GitSCM',
+                branches: [[name: params.GIT_BRANCH]],
+                extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: params.GIT_PROJECT]],
+                userRemoteConfigs: [[credentialsId: params.GIT_CREDS_ID, url: params.GIT_URL]]
+                ]
+                script {
+                      shortCommit = sh(
+                          script: "cd ${params.GIT_PROJECT} && git log -n 1 --pretty=format:'%h' && rm -rf .git*",
+                          returnStdout: true
+                        )
+                       echo "shortCommit: ${shortCommit}"
+                }
+            }
+        }
+        stage('Upload imaes') {
+              steps {
+                  dir("${WORKSPACE}/${params.GIT_PROJECT}") {
+                      sh "az storage azcopy blob upload -c ${params.APP_CONTAINER} --account-name ${params.APP_STORAGEACCOUNT} -s \"tyk_assets/*\" --recursive"
+
+                  }
+              }
+        }
+    }
+}
