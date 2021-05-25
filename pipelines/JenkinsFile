@@ -1,12 +1,11 @@
 pipeline {
   parameters {
-      string(name: 'GIT_BRANCH'  , defaultValue: 'main'                                         , description: 'Branche à compiler/livrer')
-      string(name: 'GIT_URL'     , defaultValue: 'https://github.com/aserakhi/public_assets.git', description: ' adresse Depot GIT')
-      string(name: 'GIT_CREDS_ID', defaultValue: 'foxlab_https'                                 , description: 'Declarer les Credentials')
-      string(name: 'GIT_PROJECT' , defaultValue: 'tyk_public_assets'                            , description: 'Nom du Projet')
-
-      string(name: 'APP_CONTAINER'        , defaultValue: 'testouillehaha'                   , description: 'Contenaire du blob storage de l\'application')
-      string(name: 'APP_STORAGEACCOUNT'   , defaultValue: 'testouillehaha'                   , description: 'Compte de stockage de l\'application')
+      string(name: 'GIT_BRANCH'           , defaultValue: 'main'                                         , description: 'Branche à compiler/livrer')
+      string(name: 'GIT_URL'              , defaultValue: 'https://github.com/aserakhi/public_assets.git', description: ' adresse Depot GIT')
+      string(name: 'GIT_CREDS_ID'         , defaultValue: 'foxlab_https'                                 , description: 'Declarer les Credentials')
+      string(name: 'GIT_PROJECT'          , defaultValue: 'tyk_public_assets'                            , description: 'Nom du Projet')
+      string(name: 'APP_CONTAINER'        , defaultValue: 'testouillehaha'                      , description: 'Contenaire du blob storage de l\'application')
+      string(name: 'APP_STORAGEACCOUNT'   , defaultValue: 'testouillehaha'                      , description: 'Compte de stockage de l\'application')
   }
 
   
